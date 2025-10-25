@@ -2,18 +2,50 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bookshop{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
-</head>
-<body class="bg-gray-100 text-gray-900">
-    <nav class="bg-white shadow-md py-4 px-8 mb-10">
-        <h1 class="text-2xl font-bold text-blue-600">📚 Bookshop</h1>
-    </nav>
 
-    <main class="container mx-auto px-4">
+    {# 🔥 Environnement intelligent : Vite en dev / fichiers build en prod #}
+    {% if app.debug %}
+        {# --- Mode DEV : injecte les fichiers depuis le serveur Vite --- #}
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="http://localhost:5173/assets/app.js"></script>
+    {% else %}
+        {# --- Mode PROD : charge les fichiers compilés --- #}
+        <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+        <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
+    {% endif %}
+</head>
+
+<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
+
+    {# --- Header / Navbar --- #}
+    <header class="bg-white shadow-md py-4 px-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ path('app_home') }}" class="text-2xl font-bold text-blue-600 flex items-center gap-2">
+                📚 <span>Bookshop</span>
+            </a>
+
+            <nav class="space-x-6 text-gray-700 font-medium">
+                <a href="#" class="hover:text-blue-600 transition">Accueil</a>
+                <a href="#" class="hover:text-blue-600 transition">Livres</a>
+                <a href="#" class="hover:text-blue-600 transition">Coffrets</a>
+                <a href="#" class="hover:text-blue-600 transition">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    {# --- Contenu principal --- #}
+    <main class="grow container mx-auto px-6 py-12">
         {% block body %}{% endblock %}
     </main>
 
-    <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
+    {# --- Footer --- #}
+    <footer class="bg-gray-800 text-gray-300 text-center py-6 mt-auto">
+        <p class="text-sm">
+            &copy; {{ "now"|date("Y") }} <span class="text-blue-400 font-semibold">Bookshop</span> — Tous droits réservés.
+        </p>
+    </footer>
+
 </body>
 </html>
