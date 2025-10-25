@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}Bookshop{% endblock %}</title>
-  <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+    <meta charset="UTF-8">
+    <title>{% block title %}Bookshop{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
 </head>
 <body class="bg-gray-100 text-gray-900">
-  {% block body %}{% endblock %}
-  <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
+    <nav class="bg-white shadow-md py-4 px-8 mb-10">
+        <h1 class="text-2xl font-bold text-blue-600">📚 Bookshop</h1>
+    </nav>
+
+    <main class="container mx-auto px-4">
+        {% block body %}{% endblock %}
+    </main>
+
+    <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
 </body>
 </html>
