@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Bookshop{% endblock %}</title>
-
-    {{ vite_entry_link_tags('app') }}
-    {{ vite_entry_script_tags('app') }}
-  </head>
-  <body class="bg-gray-50 text-gray-900">
-    {% block body %}{% endblock %}
-  </body>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Bookshop{% endblock %}</title>
+  <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+</head>
+<body class="bg-gray-100 text-gray-900">
+  {% block body %}{% endblock %}
+  <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
+</body>
 </html>
