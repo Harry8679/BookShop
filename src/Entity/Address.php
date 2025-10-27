@@ -23,13 +23,16 @@ class Address
     private ?string $city = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $country = null;
+    private ?string $country = 'France';
 
     #[ORM\Column(options: ['default' => false])]
     private ?bool $isBilling = false;
 
     #[ORM\Column(options: ['default' => false])]
     private ?bool $isShipping = false;
+
+    #[ORM\ManyToOne(inversedBy: 'addresses')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -111,5 +114,17 @@ class Address
     public function __toString(): string
     {
         return $this->street." ".$this->postalCode." ".$this->city;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

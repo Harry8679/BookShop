@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -39,6 +41,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
+
+    /**
+     * @var Collection<int, Address>
+     */
+    #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'user')]
+    private Collection $addresses;
+
+    public function __construct()
+    {
+        $this->addresses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,5 +173,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullName(): string
     {
         return "$this->firstName $this->lastName";
+    }
+
+    /**
+     * @return Collection<int, Address>
+     */
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
+    }
+
+    public function addAddress(Address $address): static
+    {
+        if (!$this->addresses->contains($address)) {
+            $this->addresses->add($address);
+            $address->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): static
+    {
+        if ($this->addresses->removeElement($address)) {
+            // set the owning side to null (unless already changed)
+            if ($address->getUser() === $this) {
+                $address->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
