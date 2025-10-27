@@ -27,7 +27,7 @@ class Product
     private ?float $price = null;
 
     #[ORM\Column]
-    private ?int $stock = null;
+    private ?int $stock = 0;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
