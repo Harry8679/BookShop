@@ -25,11 +25,11 @@ class Address
     #[ORM\Column(length: 100)]
     private ?string $country = null;
 
-    #[ORM\Column]
-    private ?bool $isBilling = null;
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isBilling = false;
 
-    #[ORM\Column]
-    private ?bool $isShipping = null;
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isShipping = false;
 
     public function getId(): ?int
     {
@@ -106,5 +106,10 @@ class Address
         $this->isShipping = $isShipping;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->street." ".$this->postalCode." ".$this->city;
     }
 }
