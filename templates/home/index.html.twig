@@ -3,87 +3,64 @@
 {% block title %}Accueil - Bookshop{% endblock %}
 
 {% block body %}
-<!-- HERO SECTION -->
-<section class="relative bg-gray-50 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-12">
-    <div class="md:w-1/2 space-y-6">
-      <h1 class="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-        Redécouvrez le plaisir du papier ✨
-      </h1>
-      <p class="text-lg text-gray-600">
-        Carnets, coffrets, impressions artistiques et accessoires conçus avec amour pour les passionnés d’écriture et de design.
-      </p>
-      <a href="#collections" class="inline-block bg-blue-600 text-white font-medium px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
-        Découvrir la boutique
-      </a>
+
+<!-- SECTION : 4 BANNIÈRES COLLECTIONS -->
+<section class="bg-white py-14">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-semibold mb-10 tracking-wide text-gray-900">
+            Collections de la boutique
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {% set collections = [
+                {'name': 'Carnets', 'img': 'https://images.unsplash.com/photo-1586864387967-d3f3c9e8d74f'},
+                {'name': 'Emballage', 'img': 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4'},
+                {'name': 'Papeterie', 'img': 'https://images.unsplash.com/photo-1503602642458-232111445657'},
+                {'name': 'Impressions', 'img': 'https://images.unsplash.com/photo-1532153955177-f59af40d6472'}
+            ] %}
+
+            {% for c in collections %}
+            <a href="#" class="group block overflow-hidden rounded-xl shadow hover:shadow-lg transition">
+                <img src="{{ c.img }}?auto=format&fit=crop&w=600&q=80"
+                     alt="{{ c.name }}"
+                     class="w-full h-64 object-cover group-hover:scale-105 duration-500">
+                <div class="py-3 bg-white">
+                    <span class="text-gray-800 font-medium group-hover:text-blue-600 transition">
+                        {{ c.name }}
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
-    <div class="md:w-1/2">
-      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=80"
-           alt="Papeterie élégante" class="rounded-2xl shadow-lg w-full object-cover">
-    </div>
-  </div>
 </section>
 
-<!-- COLLECTIONS -->
-<section id="collections" class="bg-white py-20">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Collections de la boutique</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      {% set collections = [
-        {'name': 'Carnets', 'img': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'},
-        {'name': 'Papier d\'emballage', 'img': 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=80'},
-        {'name': 'Cartes de notes', 'img': 'https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=600&q=80'},
-        {'name': 'Impressions', 'img': 'https://images.unsplash.com/photo-1532153955177-f59af40d6472?auto=format&fit=crop&w=600&q=80'}
-      ] %}
-      {% for c in collections %}
-      <div class="group cursor-pointer">
-        <div class="overflow-hidden rounded-lg shadow-lg">
-          <img src="{{ c.img }}" alt="{{ c.name }}"
-               class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+
+<!-- SECTION : NOUVEAUTÉS (2 produits) -->
+<section class="bg-gray-50 py-20 border-t">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-semibold mb-10 tracking-wide text-gray-900">
+            Nouveautés ✨
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {% for i in 1..2 %}
+            <a href="#" class="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden block">
+                <img src="https://images.unsplash.com/photo-1602526218701-9323f3c2e97b?auto=format&fit=crop&w=900&q=80"
+                     alt="Produit {{ i }}"
+                     class="w-full h-80 object-cover hover:scale-105 transition duration-700">
+
+                <div class="p-6 text-left">
+                    <h3 class="text-xl font-semibold text-gray-900">Produit {{ i }}</h3>
+                    <p class="text-gray-600 mt-1">Un design unique, pensé pour l’élégance.</p>
+                    <span class="text-blue-600 font-semibold text-lg mt-2 inline-block">
+                        29,90 €
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
         </div>
-        <div class="mt-4 text-center">
-          <h3 class="text-xl font-semibold text-gray-800">{{ c.name }}</h3>
-          <a href="#" class="text-blue-600 text-sm font-medium hover:underline">Tout voir →</a>
-        </div>
-      </div>
-      {% endfor %}
     </div>
-  </div>
 </section>
 
-<!-- NOUVEAUTÉS -->
-<section class="bg-gray-50 py-20">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-12">Nouveautés</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {% for i in 1..3 %}
-      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <img src="https://images.unsplash.com/photo-1602526218701-9323f3c2e97b?auto=format&fit=crop&w=800&q=80"
-             alt="Produit {{ i }}" class="w-full h-56 object-cover">
-        <div class="p-6 space-y-2">
-          <h3 class="text-lg font-semibold text-gray-800">Produit {{ i }}</h3>
-          <p class="text-gray-600 text-sm">Une création artisanale unique pour embellir votre bureau.</p>
-          <span class="block font-semibold text-blue-600">29,90 €</span>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="bg-white py-20 border-t">
-  <div class="max-w-3xl mx-auto text-center">
-    <h2 class="text-2xl font-semibold mb-4">Rejoignez les amoureux du papier 💌</h2>
-    <p class="text-gray-600 mb-6">Recevez nos actualités et offres exclusives.</p>
-    <form action="#" class="flex flex-col sm:flex-row justify-center gap-3 px-6">
-      <input type="email" placeholder="Votre e-mail"
-             class="border border-gray-300 rounded-lg px-4 py-3 w-full sm:w-2/3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <button type="submit"
-              class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition">
-        S'inscrire
-      </button>
-    </form>
-  </div>
-</section>
 {% endblock %}
