@@ -33,6 +33,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setFormType(VichImageType::class)
                 ->onlyOnForms(),
 
+            // ✅ Corrigé : utiliser la bonne propriété de l’entité
             ImageField::new('image', 'Aperçu')
                 ->setBasePath('/uploads/images/products')
                 ->onlyOnIndex(),
