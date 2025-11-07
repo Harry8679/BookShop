@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte — HolyBloom{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gradient-to-b from-pink-50 via-white to-purple-50 flex items-center justify-center px-4">
+    <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-lg border border-purple-100">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-purple-700 font-serif">Créer votre compte ✨</h1>
+            <p class="text-gray-600 mt-2 text-sm">Rejoignez la communauté des femmes inspirées par la foi 💗</p>
+        </div>
+
+        {{ form_start(registrationForm, { 'attr': { 'class': 'space-y-5' } }) }}
+
+            <div>
+                {{ form_label(registrationForm.firstName, "Prénom") }}
+                {{ form_widget(registrationForm.firstName, { attr: {
+                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
+                            text-gray-800 placeholder-gray-400 
+                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
+                            transition duration-200",
+                    placeholder: "Marie..."
+                }}) }}
+            </div>
+
+            <div>
+                {{ form_label(registrationForm.lastName, "Nom") }}
+                {{ form_widget(registrationForm.lastName, { attr: {
+                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
+                            text-gray-800 placeholder-gray-400 
+                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
+                            transition duration-200",
+                    placeholder: "Dupont..."
+                }}) }}
+            </div>
+
+            <div>
+                {{ form_label(registrationForm.email, "Adresse e-mail") }}
+                {{ form_widget(registrationForm.email, { attr: {
+                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
+                            text-gray-800 placeholder-gray-400 
+                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
+                            transition duration-200",
+                    placeholder: "exemple@gmail.com"
+                }}) }}
+            </div>
+
+            <div>
+                {{ form_label(registrationForm.plainPassword, "Mot de passe") }}
+                {{ form_widget(registrationForm.plainPassword, { attr: {
+                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
+                            text-gray-800 placeholder-gray-400 
+                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
+                            transition duration-200",
+                    placeholder: "••••••••"
+                }}) }}
+            </div>
+
+            <div>
+                {{ form_label(registrationForm.confirmPassword, "Confirmez le mot de passe") }}
+                {{ form_widget(registrationForm.confirmPassword, { attr: {
+                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
+                            text-gray-800 placeholder-gray-400 
+                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
+                            transition duration-200",
+                    placeholder: "••••••••"
+                }}) }}
+                <p class="text-xs text-gray-500 mt-1">Les mots de passe doivent correspondre ✅</p>
+            </div>
+
+
+            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-lg py-3 mt-4 font-semibold transition">
+                ✨ Créer mon compte
+            </button>
+
+        {{ form_end(registrationForm) }}
+
+        <p class="text-center text-sm text-gray-600 mt-6">
+            Déjà un compte ? <a href="#" class="text-purple-600 font-semibold hover:underline">Se connecter</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
