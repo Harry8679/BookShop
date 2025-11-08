@@ -107,8 +107,16 @@ class Product
         return $this;
     }
 
-    public function getPromoPrice(): ?float { return $this->promoPrice; }
-    public function setPromoPrice(?float $promoPrice): static { $this->promoPrice = $promoPrice; return $this; }
+    public function getPromoPrice(): ?float
+    {
+        return $this->promoPrice !== null ? $this->promoPrice / 100 : null;
+    }
+
+    public function setPromoPrice(?float $promoPrice): static
+    {
+        $this->promoPrice = $promoPrice ? $promoPrice * 100 : null;
+        return $this;
+    }
 
     public function getStock(): ?int { return $this->stock; }
     public function setStock(int $stock): static { $this->stock = $stock; return $this; }
