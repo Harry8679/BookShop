@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} - Bookshop{% endblock %}
+
+{% block body %}
+<section class="py-16 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+        {# --- IMAGE DU PRODUIT --- #}
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+            {% if product.image %}
+                <img src="{{ asset('uploads/images/products/' ~ product.image) }}"
+                     alt="{{ product.name }}"
+                     class="w-full h-[420px] object-cover">
+            {% else %}
+                <div class="w-full h-[420px] flex items-center justify-center text-gray-400 bg-gray-100">
+                    Aucune image disponible
+                </div>
+            {% endif %}
+        </div>
+
+        {# --- INFORMATIONS PRODUIT --- #}
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
+
+            {% if product.category %}
+                <a href="{{ path('app_category_show', { id: product.category.id }) }}"
+                   class="inline-block text-blue-600 text-sm font-medium mb-3 hover:underline">
+                    {{ product.category.name }}
+                </a>
+            {% endif %}
+
+            <p class="text-gray-700 text-base leading-relaxed mb-6">
+                {{ product.description }}
+            </p>
+
+            <div class="text-2xl font-semibold text-blue-600 mb-8">
+                {{ product.price|number_format(2, ',', ' ') }} €
+            </div>
+
+            <div class="flex gap-4">
+                <a href="#"
+                   class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow transition">
+                    Ajouter au panier
+                </a>
+
+                <a href="{{ path('app_category_show', { id: product.category.id }) }}"
+                   class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-6 rounded-lg shadow transition">
+                    ← Retour à la catégorie
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# --- SECTION PRODUITS SIMILAIRES (optionnelle) --- #}
+{% if similarProducts is defined and similarProducts|length > 0 %}
+<section class="py-14 border-t bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-2xl font-semibold mb-8 text-gray-900">Produits similaires</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {% for item in similarProducts %}
+                <a href="{{ path('app_product_show', { id: item.id }) }}"
+                   class="block bg-white rounded-xl shadow hover:shadow-lg overflow-hidden transition">
+                    {% if item.image %}
+                        <img src="{{ asset('uploads/images/products/' ~ item.image) }}"
+                             alt="{{ item.name }}"
+                             class="w-full h-48 object-cover">
+                    {% endif %}
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-900">{{ item.name }}</h3>
+                        <div class="text-blue-600 font-medium mt-2">
+                            {{ item.price|number_format(2, ',', ' ') }} €
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
