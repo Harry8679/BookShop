@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}HolyBloom{% endblock %}</title>
 
-    {# 🔥 Environnement intelligent : Vite en dev / fichiers build en prod #}
+    {# 🌿 Mode DEV : charge d’abord le CSS statique, puis Vite pour le HMR #}
     {% if app.debug %}
-        {# --- Mode DEV : injecte les fichiers depuis le serveur Vite --- #}
+        {# 1️⃣ On charge un CSS statique directement depuis /public pour éviter le flash #}
+        <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+
+        {# 2️⃣ Ensuite, on connecte Vite pour le hot reload JS/CSS #}
         <script type="module" src="http://localhost:5173/@vite/client"></script>
         <script type="module" src="http://localhost:5173/assets/app.js"></script>
     {% else %}
-        {# --- Mode PROD : charge les fichiers compilés --- #}
+        {# 🌸 Mode PROD : tout est servi depuis le build #}
         <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
         <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
     {% endif %}
@@ -27,43 +30,42 @@
     <header class="border-b border-neutral-200 bg-white">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
 
-        {# 🤝 Réseaux sociaux gauche #}
-        <div class="flex gap-4 text-neutral-800">
-            <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-youtube"></i></a>
-            <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-instagram"></i></a>
-        </div>
+            {# 🤝 Réseaux sociaux gauche #}
+            <div class="flex gap-4 text-neutral-800">
+                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-instagram"></i></a>
+            </div>
 
-        {# 🏛️ Logo au centre #}
-        <a href="{{ path('app_home') }}" class="absolute left-1/2 transform -translate-x-1/2 flex items-center">
-            <img src="{{ asset('logo.svg') }}" alt="HolyBloom Logo" class="h-10">
-        </a>
-
-        {# 🛒 Actions à droite #}
-        <div class="flex items-center gap-6 text-neutral-800">
-            <a href="{{ path('app_register') }}" class="hover:text-neutral-500 transition text-sm">Inscription</a> |
-            <a href="{{ path('app_login') }}" class="hover:text-neutral-500 transition text-sm">Connexion</a>
-
-            <a href="#" class="hover:text-neutral-500 transition relative">
-                <i class="fas fa-shopping-bag text-xl"></i>
-                <span class="absolute -top-2 -right-2 text-xs bg-black text-white rounded-full px-1">0</span>
+            {# 🏛️ Logo au centre #}
+            <a href="{{ path('app_home') }}" class="absolute left-1/2 transform -translate-x-1/2 flex items-center">
+                <img src="{{ asset('logo.svg') }}" alt="HolyBloom Logo" class="h-10">
             </a>
+
+            {# 🛒 Actions à droite #}
+            <div class="flex items-center gap-6 text-neutral-800">
+                <a href="{{ path('app_register') }}" class="hover:text-neutral-500 transition text-sm">Inscription</a> |
+                <a href="{{ path('app_login') }}" class="hover:text-neutral-500 transition text-sm">Connexion</a>
+
+                <a href="#" class="hover:text-neutral-500 transition relative">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                    <span class="absolute -top-2 -right-2 text-xs bg-black text-white rounded-full px-1">0</span>
+                </a>
+            </div>
         </div>
 
-    </div>
-
-    {# 🔽 Menu secondaire sous le logo #}
-    <nav class="bg-white border-t border-neutral-200">
-        <ul class="flex justify-center gap-10 text-neutral-700 font-medium py-4 tracking-wide">
-            <li><a href="{{ path('app_home') }}" class="hover:text-black transition">Accueil</a></li>
-            <li><a href="#" class="hover:text-black transition">Boutique</a></li>
-            <li><a href="#" class="hover:text-black transition">À propos</a></li>
-            <li><a href="#" class="hover:text-black transition">Blog</a></li>
-            <li><a href="#" class="hover:text-black transition">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+        {# 🔽 Menu secondaire sous le logo #}
+        <nav class="bg-white border-t border-neutral-200">
+            <ul class="flex justify-center gap-10 text-neutral-700 font-medium py-4 tracking-wide">
+                <li><a href="{{ path('app_home') }}" class="hover:text-black transition">Accueil</a></li>
+                <li><a href="#" class="hover:text-black transition">Boutique</a></li>
+                <li><a href="#" class="hover:text-black transition">À propos</a></li>
+                <li><a href="#" class="hover:text-black transition">Blog</a></li>
+                <li><a href="#" class="hover:text-black transition">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
     {# --- Contenu principal --- #}
     <main class="grow container mx-auto px-6 py-12">
@@ -76,6 +78,5 @@
             &copy; {{ "now"|date("Y") }} <span class="text-blue-400 font-semibold">Bookshop</span> — Tous droits réservés.
         </p>
     </footer>
-
 </body>
 </html>
