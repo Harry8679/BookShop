@@ -4,39 +4,43 @@
 
 {% block body %}
 
-<!-- SECTION : 4 BANNIÈRES COLLECTIONS -->
+<!-- SECTION : COLLECTIONS DYNAMIQUES -->
 <section class="bg-white py-14">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <h2 class="text-3xl font-semibold mb-10 tracking-wide text-gray-900">
             Collections de la boutique
         </h2>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {% set collections = [
-                {'name': 'Carnets', 'img': 'https://images.unsplash.com/photo-1612367980327-7454a7276aa7?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FybmV0fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=900'},
-                {'name': 'Emballage', 'img': 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4'},
-                {'name': 'Papeterie', 'img': 'https://images.unsplash.com/photo-1503602642458-232111445657'},
-                {'name': 'Impressions', 'img': 'https://images.unsplash.com/photo-1532153955177-f59af40d6472'}
-            ] %}
-
-            {% for c in collections %}
-            <a href="#" class="group block overflow-hidden rounded-xl shadow hover:shadow-lg transition">
-                <img src="{{ c.img }}?auto=format&fit=crop&w=600&q=80"
-                     alt="{{ c.name }}"
-                     class="w-full h-64 object-cover group-hover:scale-105 duration-500">
-                <div class="py-3 bg-white">
-                    <span class="text-gray-800 font-medium group-hover:text-blue-600 transition">
-                        {{ c.name }}
-                    </span>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
+        {% if categories is not empty %}
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {% for category in categories %}
+                    <a href="{{ path('app_category_show', { id: category.id }) }}"
+                       class="group block overflow-hidden rounded-xl shadow hover:shadow-lg transition">
+                        {% if category.imageName %}
+                            <img src="{{ asset('uploads/images/categories/' ~ category.imageName) }}"
+                                 alt="{{ category.name }}"
+                                 class="w-full h-64 object-cover group-hover:scale-105 duration-500">
+                        {% else %}
+                            <div class="w-full h-64 bg-gray-200 flex items-center justify-center text-gray-500">
+                                Pas d’image
+                            </div>
+                        {% endif %}
+                        <div class="py-3 bg-white">
+                            <span class="text-gray-800 font-medium group-hover:text-blue-600 transition">
+                                {{ category.name }}
+                            </span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500 mt-4">Aucune catégorie disponible pour le moment.</p>
+        {% endif %}
     </div>
 </section>
 
 
-<!-- SECTION : NOUVEAUTÉS (2 produits) -->
+<!-- SECTION : NOUVEAUTÉS (2 produits factices pour l’instant) -->
 <section class="bg-gray-50 py-20 border-t">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <h2 class="text-3xl font-semibold mb-10 tracking-wide text-gray-900">
@@ -44,28 +48,28 @@
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-    {% set nouveautés = [
-        'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=80',
-        'https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FybmV0fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=900'
-    ] %}
+            {% set nouveautés = [
+                'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=80',
+                'https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FybmV0fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=900'
+            ] %}
 
-    {% for img in nouveautés %}
-    <a href="#" class="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden block">
-        <img src="{{ img }}"
-             alt="Produit"
-             class="w-full h-80 object-cover hover:scale-105 transition duration-700">
+            {% for img in nouveautés %}
+                <a href="#"
+                   class="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden block">
+                    <img src="{{ img }}"
+                         alt="Produit"
+                         class="w-full h-80 object-cover hover:scale-105 transition duration-700">
 
-        <div class="p-6 text-left">
-            <h3 class="text-xl font-semibold text-gray-900">Produit {{ loop.index }}</h3>
-            <p class="text-gray-600 mt-1">Un design unique, pensé pour l’élégance.</p>
-            <span class="text-blue-600 font-semibold text-lg mt-2 inline-block">
-                29,90 €
-            </span>
+                    <div class="p-6 text-left">
+                        <h3 class="text-xl font-semibold text-gray-900">Produit {{ loop.index }}</h3>
+                        <p class="text-gray-600 mt-1">Un design unique, pensé pour l’élégance.</p>
+                        <span class="text-blue-600 font-semibold text-lg mt-2 inline-block">
+                            29,90 €
+                        </span>
+                    </div>
+                </a>
+            {% endfor %}
         </div>
-    </a>
-    {% endfor %}
-</div>
-
     </div>
 </section>
 
