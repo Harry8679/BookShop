@@ -130,8 +130,14 @@ class Product
     public function setCategory(?Category $category): static { $this->category = $category; return $this; }
 
     public function getPriceFormatted(): string
-    {
-        $value = $this->promoPrice ?? $this->price ?? 0.00;
-        return number_format($value, 2, ',', ' ') . ' €';
+{
+    $value = $this->promoPrice ?? $this->price ?? 0.00;
+
+    // ✅ Si le prix est stocké en centimes, on le divise par 100
+    if ($value > 1000) {
+        $value = $value / 100;
     }
+
+    return number_format($value, 2, ',', ' ') . ' €';
+}
 }
