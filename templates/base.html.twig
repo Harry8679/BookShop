@@ -18,7 +18,14 @@
         <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
         <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
     {% endif %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-6RkO2yy0J+v6j5dy7uGb7XlFV8+gn9aI8ikKZ+WzCygkVZ7fKoV70Y7kMjGuYwX7lZjh4PfpwCwZBoqLqT6MFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-6RkO2yy0J+v6j5dy7uGb7XlFV8+gn9aI8ikKZ+WzCygkVZ7fKoV70Y7kMjGuYwX7lZjh4PfpwCwZBoqLqT6MFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> #}
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
 </head>
 
 <body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
@@ -30,13 +37,12 @@
     {# --- Header / Navbar --- #}
     <header class="border-b border-neutral-200 bg-white">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
-
             {# 🤝 Réseaux sociaux gauche #}
             <div class="flex gap-4 text-neutral-800">
-                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="hover:text-neutral-500 transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-blue-600 transition"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-sky-500 transition"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="hover:text-red-600 transition"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="hover:text-pink-500 transition"><i class="fa-brands fa-instagram"></i></a>
             </div>
 
             {# 🏛️ Logo au centre #}
@@ -57,7 +63,7 @@
                 <a href="{{ path('app_login') }}" class="hover:text-neutral-500 transition text-sm">Connexion</a> #}
 
                 <a href="#" class="hover:text-neutral-500 transition relative">
-                    <i class="fas fa-shopping-bag text-xl"></i>
+                    <i class="fa-solid fa-shopping-bag text-xl"></i>
                     <span class="absolute -top-2 -right-2 text-xs bg-black text-white rounded-full px-1">0</span>
                 </a>
             </div>
