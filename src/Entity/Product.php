@@ -94,8 +94,18 @@ class Product
     public function getDescription(): ?string { return $this->description; }
     public function setDescription(?string $description): static { $this->description = $description; return $this; }
 
-    public function getPrice(): ?float { return $this->price; }
-    public function setPrice(float $price): static { $this->price = $price; return $this; }
+    public function getPrice(): ?float
+    {
+        // On divise par 100 pour convertir les centimes en euros
+        return $this->price !== null ? $this->price / 100 : null;
+    }
+
+    public function setPrice(float $price): static
+    {
+        // On multiplie par 100 avant d’enregistrer en base
+        $this->price = $price * 100;
+        return $this;
+    }
 
     public function getPromoPrice(): ?float { return $this->promoPrice; }
     public function setPromoPrice(?float $promoPrice): static { $this->promoPrice = $promoPrice; return $this; }
