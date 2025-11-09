@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil - HolyBloom{% endblock %}
+
+{% block body %}
+<section class="py-5 bg-light min-vh-100 d-flex justify-content-center">
+  <div class="container mt-5" style="max-width: 700px;">
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
+      <div class="card-header bg-primary text-white py-4 text-center">
+        <h3 class="mb-0">
+          <i class="bi bi-pencil-square me-2"></i>
+          Modifier mon profil
+        </h3>
+      </div>
+
+      <div class="card-body bg-white p-5">
+        {{ form_start(form) }}
+        <div class="row g-4">
+
+          <div class="col-12">
+            <label class="form-label text-muted small">Adresse e-mail</label>
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.email) }}
+          </div>
+
+          <div class="col-12">
+            <label class="form-label text-muted small">Téléphone</label>
+            {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.phone) }}
+          </div>
+
+          <div class="col-12 mt-4 text-center">
+            <button type="submit" class="btn btn-success px-4">
+              <i class="bi bi-check-circle me-1"></i> Enregistrer
+            </button>
+            <a href="{{ path('app_user_profile') }}" class="btn btn-outline-secondary px-4 ms-2">
+              <i class="bi bi-arrow-left me-1"></i> Annuler
+            </a>
+          </div>
+        </div>
+        {{ form_end(form) }}
+      </div>
+
+      <div class="card-footer bg-light text-center py-3">
+        <small class="text-muted">
+          Créé avec ❤️ par <strong>HolyBloom</strong>
+        </small>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
