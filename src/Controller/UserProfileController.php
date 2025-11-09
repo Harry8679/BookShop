@@ -4,15 +4,23 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-final class UserProfileController extends AbstractController
+#[IsGranted('ROLE_USER')]
+class UserProfileController extends AbstractController
 {
-    #[Route('/user/profile', name: 'app_user_profile')]
+    #[Route('/profil', name: 'app_user_profile')]
     public function index(): Response
     {
-        return $this->render('user_profile/index.html.twig', [
-            'controller_name' => 'UserProfileController',
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à votre profil.');
+        }
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
         ]);
     }
 }
