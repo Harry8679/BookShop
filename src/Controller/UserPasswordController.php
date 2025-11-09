@@ -22,18 +22,22 @@ class UserPasswordController extends AbstractController
     ): Response {
         $user = $this->getUser();
 
+        // 💡 On ne lie pas le formulaire à $user car les champs ne sont pas dans l'entité User
         $form = $this->createForm(UserPasswordType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            // Les données sont dans un tableau, donc on utilise get()
+            $oldPassword = $form->get('oldPassword')->getData();
+            $newPassword = $form->get('newPassword')->getData();
 
             // Vérification de l'ancien mot de passe
-            if (!$passwordHasher->isPasswordValid($user, $data['oldPassword'])) {
+            if (!$passwordHasher->isPasswordValid($user, $oldPassword)) {
                 $this->addFlash('danger', '❌ L’ancien mot de passe est incorrect.');
             } else {
                 // Mise à jour du mot de passe
-                $user->setPassword($passwordHasher->hashPassword($user, $data['newPassword']));
+                $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($hashedPassword);
                 $em->flush();
 
                 $this->addFlash('success', '✅ Votre mot de passe a été mis à jour avec succès.');
