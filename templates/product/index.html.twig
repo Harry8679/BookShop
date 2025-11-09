@@ -3,55 +3,59 @@
 {% block title %}Boutique - HolyBloom{% endblock %}
 
 {% block body %}
-<section class="py-12 bg-gray-50 min-h-screen">
-    <div class="max-w-7xl mx-auto px-6">
-        <h1 class="text-3xl font-bold mb-8 text-center text-gray-900">Tous nos produits</h1>
+<section class="py-5 bg-light min-vh-100">
+  <div class="container">
+    <h1 class="text-center fw-bold mb-5 text-dark">Tous nos produits</h1>
 
-        {% if products is not empty %}
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                {% for product in products %}
-                    <div class="bg-white shadow rounded-xl overflow-hidden hover:shadow-lg transition flex flex-col">
-                        {% if product.image %}
-                            <img src="{{ asset('uploads/images/products/' ~ product.image) }}"
-                                 alt="{{ product.name }}"
-                                 class="w-full h-56 object-cover">
-                        {% else %}
-                            <div class="w-full h-56 bg-gray-200 flex items-center justify-center text-gray-500">
-                                Pas d’image
-                            </div>
-                        {% endif %}
+    {% if products is not empty %}
+      <div class="row g-4">
+        {% for product in products %}
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden">
+              {% if product.image %}
+                <img src="{{ asset('uploads/images/products/' ~ product.image) }}"
+                     alt="{{ product.name }}"
+                     class="card-img-top"
+                     style="height: 220px; object-fit: cover;">
+              {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center"
+                     style="height: 220px;">
+                  <span class="text-muted">Pas d’image</span>
+                </div>
+              {% endif %}
 
-                        <div class="p-4 flex flex-col justify-between grow">
-                            <div>
-                                <h3 class="font-semibold text-lg text-gray-900">{{ product.name }}</h3>
-                                <p class="text-gray-600 text-sm mt-2">
-                                    {{ product.description|u.truncate(80, '…') }}
-                                </p>
-                                <div class="text-blue-600 font-semibold text-lg mt-4">
-                                    {{ product.getPriceFormatted }}
-                                </div>
-                            </div>
+              <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="fw-semibold text-dark mb-2">{{ product.name }}</h5>
+                  <p class="text-muted small mb-3">{{ product.description|u.truncate(80, '…') }}</p>
+                  <div class="fw-semibold text-primary fs-5">
+                    {{ product.getPriceFormatted }}
+                  </div>
+                </div>
 
-                            <div class="flex gap-3 mt-6">
-                                <a href="{{ path('app_product_show', { id: product.id }) }}"
-                                   class="flex-1 text-center bg-gray-100 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-200 transition">
-                                    Voir
-                                </a>
+                <div class="d-flex gap-2 mt-4">
+                  {# 👁️ Bouton Voir (Bootstrap Icon) #}
+                  <a href="{{ path('app_product_show', { id: product.id }) }}"
+                     class="btn btn-outline-secondary flex-fill d-flex align-items-center justify-content-center">
+                    <i class="bi bi-eye me-2"></i> Voir
+                  </a>
 
-                                <a href="#"
-                                   class="flex-1 text-center bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition">
-                                    Ajouter
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+                  {# 🛒 Bouton Ajouter (Bootstrap Icon) #}
+                  <a href="#"
+                     class="btn btn-primary flex-fill d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart-plus me-2"></i> Ajouter
+                  </a>
+                </div>
+              </div>
             </div>
-        {% else %}
-            <p class="text-center text-gray-500 mt-6">
-                Aucun produit disponible pour le moment.
-            </p>
-        {% endif %}
-    </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-muted mt-5">
+        Aucun produit disponible pour le moment.
+      </p>
+    {% endif %}
+  </div>
 </section>
 {% endblock %}
