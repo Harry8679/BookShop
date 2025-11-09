@@ -3,82 +3,113 @@
 {% block title %}Créer un compte — HolyBloom{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-linear-to-b from-pink-50 via-white to-purple-50 flex items-center justify-center px-4">
-    <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-lg border border-purple-100">
-        
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-purple-700 font-serif">Créer votre compte ✨</h1>
-            <p class="text-gray-600 mt-2 text-sm">Rejoignez la communauté des femmes inspirées par la foi 💗</p>
-        </div>
+<section class="min-vh-100 d-flex align-items-center justify-content-center bg-gradient">
+  <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5" style="max-width: 520px; width: 100%;">
 
-        {{ form_start(registrationForm, { 'attr': { 'class': 'space-y-5' } }) }}
-
-            <div>
-                {{ form_label(registrationForm.firstName, "Prénom") }}
-                {{ form_widget(registrationForm.firstName, { attr: {
-                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
-                            text-gray-800 placeholder-gray-400 
-                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
-                            transition duration-200",
-                    placeholder: "Marie..."
-                }}) }}
-            </div>
-
-            <div>
-                {{ form_label(registrationForm.lastName, "Nom") }}
-                {{ form_widget(registrationForm.lastName, { attr: {
-                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
-                            text-gray-800 placeholder-gray-400 
-                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
-                            transition duration-200",
-                    placeholder: "Dupont..."
-                }}) }}
-            </div>
-
-            <div>
-                {{ form_label(registrationForm.email, "Adresse e-mail") }}
-                {{ form_widget(registrationForm.email, { attr: {
-                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
-                            text-gray-800 placeholder-gray-400 
-                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
-                            transition duration-200",
-                    placeholder: "exemple@gmail.com"
-                }}) }}
-            </div>
-
-            <div>
-                {{ form_label(registrationForm.plainPassword, "Mot de passe") }}
-                {{ form_widget(registrationForm.plainPassword, { attr: {
-                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
-                            text-gray-800 placeholder-gray-400 
-                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
-                            transition duration-200",
-                    placeholder: "••••••••"
-                }}) }}
-            </div>
-
-            <div>
-                {{ form_label(registrationForm.confirmPassword, "Confirmez le mot de passe") }}
-                {{ form_widget(registrationForm.confirmPassword, { attr: {
-                    class: "block w-full px-4 py-3 mt-1 rounded-xl border border-purple-200 bg-white 
-                            text-gray-800 placeholder-gray-400 
-                            focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 
-                            transition duration-200",
-                    placeholder: "••••••••"
-                }}) }}
-                <p class="text-xs text-gray-500 mt-1">Les mots de passe doivent correspondre ✅</p>
-            </div>
-
-
-            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-lg py-3 mt-4 font-semibold transition">
-                ✨ Créer mon compte
-            </button>
-
-        {{ form_end(registrationForm) }}
-
-        <p class="text-center text-sm text-gray-600 mt-6">
-            Déjà un compte ? <a href="#" class="text-purple-600 font-semibold hover:underline">Se connecter</a>
-        </p>
+    {# --- Titre --- #}
+    <div class="text-center mb-4">
+      <h1 class="fw-bold text-holybloom mb-2">
+        <i class="bi bi-stars me-2"></i>
+        Créer votre compte ✨
+      </h1>
+      <p class="text-secondary small">
+        Rejoignez la communauté des femmes inspirées par la foi 💗
+      </p>
     </div>
-</div>
+
+    {{ form_start(registrationForm, { attr: { class: 'needs-validation', novalidate: 'novalidate' } }) }}
+
+      <div class="mb-3">
+        {{ form_label(registrationForm.firstName, "Prénom", { label_attr: { class: 'form-label fw-semibold' } }) }}
+        {{ form_widget(registrationForm.firstName, { attr: {
+          class: 'form-control rounded-3 border-holybloom focus-ring',
+          placeholder: 'Marie…'
+        } }) }}
+      </div>
+
+      <div class="mb-3">
+        {{ form_label(registrationForm.lastName, "Nom", { label_attr: { class: 'form-label fw-semibold' } }) }}
+        {{ form_widget(registrationForm.lastName, { attr: {
+          class: 'form-control rounded-3 border-holybloom focus-ring',
+          placeholder: 'Dupont…'
+        } }) }}
+      </div>
+
+      <div class="mb-3">
+        {{ form_label(registrationForm.email, "Adresse e-mail", { label_attr: { class: 'form-label fw-semibold' } }) }}
+        {{ form_widget(registrationForm.email, { attr: {
+          class: 'form-control rounded-3 border-holybloom focus-ring',
+          placeholder: 'exemple@gmail.com'
+        } }) }}
+      </div>
+
+      <div class="mb-3">
+        {{ form_label(registrationForm.plainPassword, "Mot de passe", { label_attr: { class: 'form-label fw-semibold' } }) }}
+        {{ form_widget(registrationForm.plainPassword, { attr: {
+          class: 'form-control rounded-3 border-holybloom focus-ring',
+          placeholder: '••••••••'
+        } }) }}
+      </div>
+
+      <div class="mb-3">
+        {{ form_label(registrationForm.confirmPassword, "Confirmez le mot de passe", { label_attr: { class: 'form-label fw-semibold' } }) }}
+        {{ form_widget(registrationForm.confirmPassword, { attr: {
+          class: 'form-control rounded-3 border-holybloom focus-ring',
+          placeholder: '••••••••'
+        } }) }}
+        <div class="form-text text-muted small">
+          Les mots de passe doivent correspondre ✅
+        </div>
+      </div>
+
+      <div class="d-grid mt-4">
+        <button class="btn btn-holybloom py-2 fw-semibold rounded-3 shadow-sm">
+          ✨ Créer mon compte
+        </button>
+      </div>
+
+    {{ form_end(registrationForm) }}
+
+    <p class="text-center text-muted small mt-4">
+      Déjà un compte ?
+      <a href="{{ path('app_login') }}" class="text-holybloom fw-semibold text-decoration-none">Se connecter</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  /* 🌸 Dégradé d’arrière-plan */
+  .bg-gradient {
+    background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 60%, #f5e8ff 100%);
+  }
+
+  /* 💜 Couleurs HolyBloom */
+  .text-holybloom {
+    color: #b97add !important;
+  }
+  .border-holybloom {
+    border-color: #e3c4f5 !important;
+  }
+  .btn-holybloom {
+    background-color: #b97add;
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  .btn-holybloom:hover {
+    background-color: #a25ed1;
+    transform: translateY(-2px);
+  }
+
+  /* ✨ Focus et esthétique des champs */
+  .focus-ring:focus {
+    border-color: #b97add !important;
+    box-shadow: 0 0 0 0.2rem rgba(185, 122, 221, 0.25) !important;
+  }
+
+  .card {
+    border: 1px solid rgba(185, 122, 221, 0.1);
+    background-color: #fff;
+  }
+</style>
 {% endblock %}
