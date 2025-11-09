@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,14 +14,15 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('roles')
-            ->add('password')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('phone')
-            ->add('isVerified')
-        ;
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse e-mail',
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Entrez votre adresse e-mail'],
+            ])
+            ->add('phone', TelType::class, [
+                'label' => 'Numéro de téléphone',
+                'required' => false,
+                'attr' => ['class' => 'form-control', 'placeholder' => 'Ex : +33 6 12 34 56 78'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
