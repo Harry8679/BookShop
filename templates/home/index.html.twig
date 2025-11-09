@@ -1,76 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - Bookshop{% endblock %}
+{% block title %}Accueil - HolyBloom{% endblock %}
 
 {% block body %}
 
-<!-- SECTION : COLLECTIONS DYNAMIQUES -->
-<section class="bg-white py-14">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-semibold mb-10 tracking-wide text-gray-900">
-            Collections de la boutique
-        </h2>
+<!-- SECTION : COLLECTIONS -->
+<section class="bg-white py-5">
+  <div class="container text-center">
+    <h2 class="fw-semibold mb-5 text-dark">Collections de la boutique</h2>
 
-        {% if categories is not empty %}
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {% for category in categories %}
-                    <a href="{{ path('app_category_show', { id: category.id }) }}"
-                       class="group block overflow-hidden rounded-xl shadow hover:shadow-lg transition">
-                        {% if category.imageName %}
-                            <img src="{{ asset('uploads/images/categories/' ~ category.imageName) }}"
-                                 alt="{{ category.name }}"
-                                 class="w-full h-64 object-cover group-hover:scale-105 duration-500">
-                        {% else %}
-                            <div class="w-full h-64 bg-gray-200 flex items-center justify-center text-gray-500">
-                                Pas d’image
-                            </div>
-                        {% endif %}
-                        <div class="py-3 bg-white">
-                            <span class="text-gray-800 font-medium group-hover:text-blue-600 transition">
-                                {{ category.name }}
-                            </span>
-                        </div>
-                    </a>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-gray-500 mt-4">Aucune catégorie disponible pour le moment.</p>
-        {% endif %}
-    </div>
+    {% if categories is not empty %}
+      <div class="row g-4 justify-content-center">
+        {% for category in categories %}
+          <div class="col-6 col-md-3">
+            <a href="{{ path('app_category_show', { id: category.id }) }}"
+               class="text-decoration-none text-dark d-block shadow-sm rounded-4 overflow-hidden position-relative hover-shadow transition">
+              {% if category.imageName %}
+                <img src="{{ asset('uploads/images/categories/' ~ category.imageName) }}"
+                     alt="{{ category.name }}"
+                     class="img-fluid rounded-top object-fit-cover"
+                     style="height: 240px; width: 100%; object-fit: cover;">
+              {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 240px;">
+                  <span class="text-muted">Pas d’image</span>
+                </div>
+              {% endif %}
+              <div class="py-3 bg-white">
+                <span class="fw-medium text-dark">{{ category.name }}</span>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted mt-4">Aucune catégorie disponible pour le moment.</p>
+    {% endif %}
+  </div>
 </section>
 
+<!-- SECTION : NOUVEAUTÉS -->
+<section class="bg-light py-5 border-top">
+  <div class="container text-center">
+    <h2 class="fw-semibold mb-5 text-dark">Nouveautés ✨</h2>
 
-<!-- SECTION : NOUVEAUTÉS (2 produits factices pour l’instant) -->
-<section class="bg-gray-50 py-20 border-t">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-semibold mb-10 tracking-wide text-gray-900">
-            Nouveautés ✨
-        </h2>
+    <div class="row g-4 justify-content-center">
+      {% set nouveautés = [
+          'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FybmV0fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=900'
+      ] %}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {% set nouveautés = [
-                'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=80',
-                'https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FybmV0fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=900'
-            ] %}
-
-            {% for img in nouveautés %}
-                <a href="#"
-                   class="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden block">
-                    <img src="{{ img }}"
-                         alt="Produit"
-                         class="w-full h-80 object-cover hover:scale-105 transition duration-700">
-
-                    <div class="p-6 text-left">
-                        <h3 class="text-xl font-semibold text-gray-900">Produit {{ loop.index }}</h3>
-                        <p class="text-gray-600 mt-1">Un design unique, pensé pour l’élégance.</p>
-                        <span class="text-blue-600 font-semibold text-lg mt-2 inline-block">
-                            29,90 €
-                        </span>
-                    </div>
-                </a>
-            {% endfor %}
+      {% for img in nouveautés %}
+        <div class="col-md-6 col-lg-5">
+          <div class="card border-0 shadow-sm h-100 overflow-hidden">
+            <div class="overflow-hidden">
+              <img src="{{ img }}" alt="Produit" class="card-img-top transition"
+                   style="height: 320px; object-fit: cover;">
+            </div>
+            <div class="card-body text-start">
+              <h3 class="h5 fw-semibold text-dark">Produit {{ loop.index }}</h3>
+              <p class="text-muted mb-2">Un design unique, pensé pour l’élégance.</p>
+              <span class="text-primary fw-semibold fs-5">29,90 €</span>
+            </div>
+          </div>
         </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
 {% endblock %}
