@@ -1,20 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserProfileController!{% endblock %}
+{% block title %}Mon Profil - HolyBloom{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<section class="py-5 bg-light min-vh-100 d-flex justify-content-center align-items-center">
+  <div class="container" style="max-width: 700px;">
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
+      <div class="card-header bg-primary text-white py-4 text-center">
+        <h3 class="mb-0">
+          <i class="bi bi-person-circle me-2"></i>
+          Mon Profil
+        </h3>
+      </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+      <div class="card-body bg-white p-5">
+        <form>
+          <div class="row g-4">
+            <div class="col-md-6">
+              <label class="form-label text-muted small">Prénom</label>
+              <input type="text" class="form-control" value="{{ user.firstName }}" disabled>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label text-muted small">Nom</label>
+              <input type="text" class="form-control" value="{{ user.lastName }}" disabled>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/bookshop/src/Controller/UserProfileController.php</code></li>
-        <li>Your template at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/bookshop/templates/user_profile/index.html.twig</code></li>
-    </ul>
-</div>
+            <div class="col-12">
+              <label class="form-label text-muted small">Adresse e-mail</label>
+              <input type="email" class="form-control" value="{{ user.email }}" disabled>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label text-muted small">Téléphone</label>
+              <input type="text" class="form-control" value="{{ user.phone ?: 'Non renseigné' }}" disabled>
+            </div>
+
+            <div class="col-12 mt-3">
+              <label class="form-label text-muted small">Rôles</label>
+              <div class="form-control bg-light text-secondary" disabled>
+                {{ user.roles|join(', ') }}
+              </div>
+            </div>
+
+            <div class="col-12 mt-4 text-center">
+              <a href="{{ path('app_user_edit') }}" class="btn btn-outline-primary px-4">
+                <i class="bi bi-pencil-square me-1"></i> Modifier mon profil
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card-footer bg-light text-center py-3">
+        <small class="text-muted">
+          Créé avec ❤️ par <strong>HolyBloom</strong>
+        </small>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
