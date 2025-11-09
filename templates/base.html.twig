@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}HolyBloom{% endblock %}</title>
 
+    {# 🌿 Mode DEV : charge d’abord le CSS statique, puis Vite pour le HMR #}
     {% if app.debug %}
+        {# 1️⃣ On charge un CSS statique directement depuis /public pour éviter le flash #}
         <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+
+        {# 2️⃣ Ensuite, on connecte Vite pour le hot reload JS/CSS #}
         <script type="module" src="http://localhost:5173/@vite/client"></script>
         <script type="module" src="http://localhost:5173/assets/app.js"></script>
     {% else %}
+        {# 🌸 Mode PROD : tout est servi depuis le build #}
         <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
         <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
     {% endif %}
-
-    <!-- 🌿 Font Awesome (CDN + import de secours pour le mode dev) -->
+    {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-6RkO2yy0J+v6j5dy7uGb7XlFV8+gn9aI8ikKZ+WzCygkVZ7fKoV70Y7kMjGuYwX7lZjh4PfpwCwZBoqLqT6MFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> #}
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
     />
-    <style>
-      @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
-    </style>
 </head>
 
 <body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
