@@ -3,8 +3,8 @@
 {% block title %}Mon Profil - HolyBloom{% endblock %}
 
 {% block body %}
-<section class="py-5 bg-light min-vh-100 d-flex justify-content-center align-items-center">
-  <div class="container" style="max-width: 700px;">
+<section class="py-5 bg-light min-vh-100 d-flex justify-content-center">
+  <div class="container mt-5" style="max-width: 700px;">
     <div class="card shadow border-0 rounded-4 overflow-hidden">
       <div class="card-header bg-primary text-white py-4 text-center">
         <h3 class="mb-0">
@@ -35,15 +35,7 @@
               <input type="text" class="form-control" value="{{ user.phone ?: 'Non renseigné' }}" disabled>
             </div>
 
-            {# <div class="col-12 mt-3">
-              <label class="form-label text-muted small">Rôles</label>
-              <div class="form-control bg-light text-secondary" disabled>
-                {{ user.roles|join(', ') }}
-              </div>
-            </div> #}
-
             <div class="col-12 mt-4 text-center">
-              {# <a href="{{ path('app_user_edit') }}" class="btn btn-outline-primary px-4"> #}
               <a href="#" class="btn btn-outline-primary px-4">
                 <i class="bi bi-pencil-square me-1"></i> Modifier mon profil
               </a>
