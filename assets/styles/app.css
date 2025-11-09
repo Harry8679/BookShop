@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+/* ✅ Fix Tailwind pour Font Awesome */
+[class^="fa-"], [class*=" fa-"] {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900;
+}
+
+.fab {
+  font-family: "Font Awesome 6 Brands" !important;
+  font-weight: 400;
+}
