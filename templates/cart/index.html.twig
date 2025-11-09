@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier — HolyBloom{% endblock %}
+
+{% block body %}
+<section class="py-5 bg-light min-vh-100">
+  <div class="container">
+    <h2 class="fw-bold text-holybloom mb-4">
+      <i class="bi bi-bag-heart me-2"></i> Mon panier
+    </h2>
+
+    {% if products is not empty %}
+      <div class="table-responsive shadow-sm rounded-4 bg-white p-4">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th class="text-center">Prix</th>
+              <th class="text-center">Quantité</th>
+              <th class="text-center">Sous-total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="cart-items">
+            {% for item in products %}
+              <tr data-id="{{ item.product.id }}">
+                <td>
+                  <div class="d-flex align-items-center">
+                    {% if item.product.image %}
+                      <img src="{{ asset('uploads/images/products/' ~ item.product.image) }}"
+                           alt="{{ item.product.name }}"
+                           width="70" class="rounded-3 me-3">
+                    {% endif %}
+                    <div>
+                      <h6 class="fw-semibold text-dark mb-1">{{ item.product.name }}</h6>
+                      <small class="text-muted">{{ item.product.category.name }}</small>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center text-holybloom fw-semibold">
+                  {{ item.product.price|number_format(2, ',', ' ') }} €
+                </td>
+                <td class="text-center">
+                  <div class="d-inline-flex align-items-center border rounded-pill px-2 py-1">
+                    <button type="button" class="btn btn-sm text-holybloom btn-minus">−</button>
+                    <input type="text" value="{{ item.quantity }}" 
+                           class="form-control text-center border-0 bg-transparent quantity-input"
+                           style="width: 40px;" readonly>
+                    <button type="button" class="btn btn-sm text-holybloom btn-plus">+</button>
+                  </div>
+                </td>
+                <td class="text-center fw-semibold subtotal">
+                  {{ item.subtotal|number_format(2, ',', ' ') }} €
+                </td>
+                <td class="text-end">
+                  <button type="button" class="btn btn-outline-danger btn-sm btn-delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-end mt-4">
+        <h4 class="fw-bold text-holybloom">Total : 
+          <span id="cart-total">{{ total|number_format(2, ',', ' ') }} €</span>
+        </h4>
+        <a href="#" class="btn btn-holybloom mt-3 px-4 py-2">
+          <i class="bi bi-credit-card me-1"></i> Passer au paiement
+        </a>
+      </div>
+    {% else %}
+      <p class="text-center text-muted mt-5">Votre panier est vide 💔</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .btn-holybloom {
+    background-color: #b97add;
+    border: none;
+    color: #fff;
+  }
+  .btn-holybloom:hover {
+    background-color: #a45ed8;
+  }
+  .text-holybloom {
+    color: #b97add;
+  }
+</style>
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔒 Empêche les doubles initialisations du script
+  if (window.cartScriptInitialized) return;
+  window.cartScriptInitialized = true;
+
+  /**
+   * 🔹 Met à jour le badge du panier dans la navbar
+   */
+  const updateNavbarBadge = (count) => {
+    const badge = document.querySelector('.bi-cart3 + .badge');
+    if (badge) {
+      badge.textContent = count;
+      // Optionnel : animation fluide si Animate.css est présent
+      badge.classList.add('animate__animated', 'animate__heartBeat');
+      setTimeout(() => badge.classList.remove('animate__animated', 'animate__heartBeat'), 600);
+    }
+  };
+
+  /**
+   * 🔹 Met à jour la quantité et recalcul les sous-totaux et le total
+   */
+  const updateCart = (row, newQuantity) => {
+    const id = row.dataset.id;
+
+    fetch(`/panier/update/${id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ quantity: newQuantity })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (newQuantity <= 0) {
+          row.remove();
+        } else {
+          const price = parseFloat(row.querySelector('.text-holybloom').textContent.replace(',', '.'));
+          row.querySelector('.subtotal').textContent =
+            (price * newQuantity).toFixed(2).replace('.', ',') + ' €';
+        }
+        updateTotal();
+        updateNavbarBadge(data.cartCount);
+      })
+      .catch(err => console.error('Erreur de mise à jour du panier:', err));
+  };
+
+  /**
+   * 🔹 Met à jour le total du panier
+   */
+  const updateTotal = () => {
+    let total = 0;
+    document.querySelectorAll('.subtotal').forEach(cell => {
+      const value = parseFloat(cell.textContent.replace(',', '.'));
+      if (!isNaN(value)) total += value;
+    });
+    document.getElementById('cart-total').textContent = total.toFixed(2).replace('.', ',') + ' €';
+
+    // Si le panier est vide
+    if (document.querySelectorAll('#cart-items tr').length === 0) {
+      document.querySelector('section .container').innerHTML =
+        '<p class="text-center text-muted mt-5">Votre panier est vide 💔</p>';
+      updateNavbarBadge(0);
+    }
+  };
+
+  /**
+   * 🔹 Gestion des boutons + / −
+   */
+  const handleQuantityChange = (btn, delta) => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const row = btn.closest('tr');
+      const input = row.querySelector('.quantity-input');
+      const current = parseInt(input.value) || 0;
+      const newQuantity = Math.max(current + delta, 0);
+      input.value = newQuantity;
+      updateCart(row, newQuantity);
+    });
+  };
+
+  document.querySelectorAll('.btn-plus').forEach(btn => handleQuantityChange(btn, +1));
+  document.querySelectorAll('.btn-minus').forEach(btn => handleQuantityChange(btn, -1));
+
+  /**
+   * 🔹 Suppression directe d’un produit
+   */
+  document.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const row = btn.closest('tr');
+      updateCart(row, 0);
+    });
+  });
+});
+</script>
+{% endblock %}
+{% endblock %}

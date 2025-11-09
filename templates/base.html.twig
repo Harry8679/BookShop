@@ -15,6 +15,7 @@
 
     {# 🌿 Font Awesome (CDN stable) #}
     <script src="https://kit.fontawesome.com/506909526a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     {# (optionnel) Bootstrap Icons #}
     <link
@@ -94,8 +95,8 @@
                                 </a>
                             </li>
                             <li>
-                                {# <a class="dropdown-item" href="{{ path('app_address_index') }}"> #}
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ path('app_user_addresses') }}">
+                                {# <a class="dropdown-item" href="#"> #}
                                     <i class="bi bi-geo-alt me-2"></i> Gérer mes adresses
                                 </a>
                             </li>
@@ -114,9 +115,15 @@
 
 
                 {# <a href="{{ path('app_cart_index') }}" class="position-relative text-dark fs-5"> #}
-                <a href="#" class="position-relative text-dark fs-5">
+                {# <a href="{{ path('app_cart_index') }}" class="position-relative text-dark fs-5">
                     <i class="bi bi-cart3"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">0</span>
+                </a> #}
+                <a href="{{ path('app_cart_index') }}" class="position-relative text-dark fs-5">
+                    <i class="bi bi-cart3"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                        {{ get_cart_quantity() }}
+                    </span>
                 </a>
             </div>
         </div>
@@ -127,7 +134,7 @@
                 <li class="nav-item"><a href="{{ path('app_home') }}" class="nav-link text-dark">Accueil</a></li>
                 <li class="nav-item"><a href="{{ path('app_shop_index') }}" class="nav-link text-dark">Boutique</a></li>
                 <li class="nav-item"><a href="#" class="nav-link text-dark">À propos</a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-dark">Voir mon panier</a></li>
+                <li class="nav-item"><a href="{{ path('app_cart_index') }}" class="nav-link text-dark">Voir mon panier</a></li>
                 <li class="nav-item"><a href="#" class="nav-link text-dark">Contact</a></li>
             </ul>
         </nav>
@@ -151,5 +158,6 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
     ></script>
+    {% block javascripts %}{% endblock %}
 </body>
 </html>

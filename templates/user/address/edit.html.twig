@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une adresse — HolyBloom{% endblock %}
+
+{% block body %}
+<section class="min-vh-100 d-flex align-items-center justify-content-center bg-gradient py-5">
+  <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5" style="max-width: 600px; width: 100%;">
+    
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-holybloom mb-2">
+        <i class="bi bi-pencil-square me-2"></i> Modifier l’adresse
+      </h2>
+      <p class="text-muted small">
+        Mettez à jour vos informations de livraison ou de facturation 🌷
+      </p>
+    </div>
+
+    {{ form_start(form, { attr: { class: 'needs-validation', novalidate: 'novalidate' } }) }}
+
+      <div class="row g-3">
+        <div class="col-12">
+          {{ form_label(form.street, 'Rue', { label_attr: { class: 'form-label fw-semibold' } }) }}
+          {{ form_widget(form.street, { attr: {
+            class: 'form-control rounded-3 border-holybloom focus-ring',
+            placeholder: '12 rue des Fleurs'
+          } }) }}
+        </div>
+
+        <div class="col-md-6">
+          {{ form_label(form.postalCode, 'Code postal', { label_attr: { class: 'form-label fw-semibold' } }) }}
+          {{ form_widget(form.postalCode, { attr: {
+            class: 'form-control rounded-3 border-holybloom focus-ring',
+            placeholder: '75001'
+          } }) }}
+        </div>
+
+        <div class="col-md-6">
+          {{ form_label(form.city, 'Ville', { label_attr: { class: 'form-label fw-semibold' } }) }}
+          {{ form_widget(form.city, { attr: {
+            class: 'form-control rounded-3 border-holybloom focus-ring',
+            placeholder: 'Paris'
+          } }) }}
+        </div>
+
+        <div class="col-12">
+          {{ form_label(form.country, 'Pays', { label_attr: { class: 'form-label fw-semibold' } }) }}
+          {{ form_widget(form.country, { attr: {
+            class: 'form-select rounded-3 border-holybloom focus-ring'
+          } }) }}
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-check mt-3">
+            {{ form_widget(form.isBilling, { attr: { class: 'form-check-input' } }) }}
+            {{ form_label(form.isBilling, 'Adresse de facturation', { label_attr: { class: 'form-check-label' } }) }}
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-check mt-3">
+            {{ form_widget(form.isShipping, { attr: { class: 'form-check-input' } }) }}
+            {{ form_label(form.isShipping, 'Adresse de livraison', { label_attr: { class: 'form-check-label' } }) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-5">
+        <a href="{{ path('app_user_addresses') }}" class="btn btn-outline-secondary rounded-3">
+          <i class="bi bi-arrow-left"></i> Retour
+        </a>
+        <button class="btn btn-holybloom rounded-3 shadow-sm px-4">
+          <i class="bi bi-save2 me-1"></i> Enregistrer les modifications
+        </button>
+      </div>
+
+    {{ form_end(form) }}
+  </div>
+</section>
+
+<style>
+  .bg-gradient {
+    background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 60%, #f5e8ff 100%);
+  }
+
+  .text-holybloom { color: #b97add !important; }
+  .border-holybloom { border-color: #e3c4f5 !important; }
+
+  .btn-holybloom {
+    background-color: #b97add;
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  .btn-holybloom:hover {
+    background-color: #a25ed1;
+    transform: translateY(-2px);
+  }
+
+  .focus-ring:focus {
+    border-color: #b97add !important;
+    box-shadow: 0 0 0 0.25rem rgba(185, 122, 221, 0.25) !important;
+  }
+
+  .card {
+    border: 1px solid rgba(185, 122, 221, 0.1);
+  }
+</style>
+{% endblock %}

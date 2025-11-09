@@ -41,9 +41,8 @@
                   </a>
 
                   {# 🛒 Bouton Ajouter (Bootstrap Icon) #}
-                  <a href="#"
-                     class="btn btn-primary flex-fill d-flex align-items-center justify-content-center">
-                    <i class="bi bi-cart-plus me-2"></i> Ajouter
+                  <a href="#" class="btn btn-primary flex-fill add-to-cart" data-id="{{ product.id }}">
+                    <i class="bi bi-cart-plus me-1"></i> Ajouter
                   </a>
                 </div>
               </div>
@@ -58,4 +57,21 @@
     {% endif %}
   </div>
 </section>
+
+<script>
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const id = btn.dataset.id;
+    fetch(`/panier/add/${id}`, { method: 'GET' })
+      .then(() => Swal.fire({
+        icon: 'success',
+        title: 'Ajouté !',
+        text: 'Le produit a été ajouté à votre panier 💜',
+        timer: 1500,
+        showConfirmButton: false
+      }));
+  });
+});
+</script>
 {% endblock %}

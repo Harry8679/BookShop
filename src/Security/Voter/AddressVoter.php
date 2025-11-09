@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Security\Voter;
+
+use App\Entity\Address;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+class AddressVoter extends Voter
+{
+    public const EDIT = 'ADDRESS_EDIT';
+
+    protected function supports(string $attribute, mixed $subject): bool
+    {
+        return $attribute === self::EDIT && $subject instanceof Address;
+    }
+
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    {
+        $user = $token->getUser();
+        if (!$user) return false;
+
+        /** @var Address $address */
+        $address = $subject;
+
+        // ✅ Seul le propriétaire peut modifier/supprimer
+        return $address->getUser() === $user;
+    }
+}
