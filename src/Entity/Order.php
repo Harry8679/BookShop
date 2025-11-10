@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Entity;
 
@@ -8,8 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\Table(name: '`orders`')]
 class Order
 {
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_PAID = 'paid';
+    public const STATUS_CANCELED = 'canceled';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,7 +24,7 @@ class Order
     private ?User $user = null;
 
     #[ORM\Column(length: 50)]
-    private string $status = 'pending';
+    private string $status = self::STATUS_PENDING;
 
     #[ORM\ManyToOne]
     private ?Address $shippingAddress = null;
@@ -33,13 +38,21 @@ class Order
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private float $total = 0.00;
 
-    public function __construct() { $this->items = new ArrayCollection(); }
+    #[ORM\Column(type: 'datetime')]
+    private \DateTimeInterface $createdAt;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+    }
 
     public function getId(): ?int { return $this->id; }
-    public function getStatus(): string { return $this->status; }
-    public function setStatus(string $status): static { $this->status = $status; return $this; }
     public function getUser(): ?User { return $this->user; }
     public function setUser(?User $user): static { $this->user = $user; return $this; }
+
+    public function getStatus(): string { return $this->status; }
+    public function setStatus(string $status): static { $this->status = $status; return $this; }
 
     public function getShippingAddress(): ?Address { return $this->shippingAddress; }
     public function setShippingAddress(?Address $shippingAddress): static { $this->shippingAddress = $shippingAddress; return $this; }
@@ -66,7 +79,18 @@ class Order
     public function getTotal(): float { return $this->total; }
     public function setTotal(float $total): static { $this->total = $total; return $this; }
 
-    public function __toString(): string {
-        return "Commande #".$this->id;
+    public function calculateTotal(): void
+    {
+        $this->total = 0;
+        foreach ($this->items as $item) {
+            $this->total += $item->getTotal();
+        }
+    }
+
+    public function getCreatedAt(): \DateTimeInterface { return $this->createdAt; }
+
+    public function __toString(): string
+    {
+        return sprintf("Commande #%d (%s)", $this->id, $this->status);
     }
 }

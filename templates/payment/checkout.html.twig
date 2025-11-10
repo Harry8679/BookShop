@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}Paiement — HolyBloom{% endblock %}
+
+{% block body %}
+<section class="py-5 text-center">
+  <div class="container">
+    <h2 class="text-holybloom mb-4"><i class="bi bi-credit-card"></i> Paiement sécurisé</h2>
+    <p>Vous allez être redirigé vers le module de paiement sécurisé Stripe 💳</p>
+    <button id="checkout-button" class="btn btn-holybloom mt-3">Payer maintenant</button>
+  </div>
+</section>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe('{{ publicKey }}');
+  document.getElementById('checkout-button').addEventListener('click', () => {
+    stripe.redirectToCheckout({ sessionId: '{{ sessionId }}' });
+  });
+</script>
+
+<style>
+  .btn-holybloom { background-color: #b97add; border: none; color: #fff; }
+  .btn-holybloom:hover { background-color: #a45ed8; }
+  .text-holybloom { color: #b97add; }
+</style>
+{% endblock %}

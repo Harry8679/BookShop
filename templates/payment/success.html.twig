@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title %}Paiement réussi — HolyBloom{% endblock %}
+
+{% block body %}
+<section class="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light text-center">
+  <div class="card shadow-lg border-0 rounded-4 p-5" style="max-width: 500px;">
+    <div class="text-center mb-4">
+      <div class="rounded-circle bg-holybloom text-white d-inline-flex align-items-center justify-content-center"
+           style="width: 80px; height: 80px; font-size: 2.5rem;">
+        <i class="bi bi-check2-circle"></i>
+      </div>
+    </div>
+
+    <h2 class="fw-bold text-holybloom mb-3">Paiement confirmé 💜</h2>
+    <p class="text-muted mb-2">Merci pour votre commande, <strong>{{ app.user.firstname }}</strong> !</p>
+    <p class="mb-4">Votre commande <strong>#{{ order.id }}</strong> est en cours de traitement.</p>
+
+    <a href="{{ path('app_user_orders') }}" 
+       class="btn btn-holybloom px-4 py-2 fw-semibold rounded-pill shadow-sm d-inline-flex align-items-center gap-2">
+      <i class="bi bi-box-seam"></i> Voir mes commandes
+    </a>
+
+    <div class="mt-4">
+      <a href="{{ path('app_home') }}" class="text-decoration-none text-secondary small">
+        <i class="bi bi-arrow-left"></i> Retour à l'accueil
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .btn-holybloom {
+    background: linear-gradient(135deg, #b97add, #a45ed8);
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  .btn-holybloom:hover {
+    background: linear-gradient(135deg, #a45ed8, #b97add);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(185, 122, 221, 0.3);
+  }
+  .text-holybloom { color: #b97add; }
+  .bg-holybloom { background-color: #b97add; }
+</style>
+{% endblock %}

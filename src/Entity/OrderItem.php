@@ -23,9 +23,10 @@ class OrderItem
     private int $quantity = 1;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private float $price;
+    private float $price = 0.00;
 
     public function getId(): ?int { return $this->id; }
+
     public function getProduct(): ?Product { return $this->product; }
     public function setProduct(?Product $product): static { $this->product = $product; return $this; }
 
